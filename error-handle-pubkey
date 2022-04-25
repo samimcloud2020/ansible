@@ -1,0 +1,2 @@
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886
+-----> pubkey is C2518248EEA14886 (any gpg key error)
