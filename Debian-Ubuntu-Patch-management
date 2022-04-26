@@ -1,0 +1,28 @@
+---
+- name: updating os
+  hosts: gameservers
+  become: yes
+  tasks:
+  - name: updating os package
+    shell:  apt update -y
+    register: result
+  - name: confirm completion
+    debug:
+      msg: patching of {{ inventory_hostname }}completed      
+  - name: viewing output of patching command
+    debug: 
+      var: result
+      verbosity: 1
+  - name: Display all variables/facts known for a host
+    debug:
+      var: hostvars[inventory_hostname]
+      verbosity: 1    
+  - name: reboot my hosts
+    shell: sleep 10 && reboot
+    ignore_errors: true
+  - name: validating if my host came back fine
+    wait_for:
+      host: 0.0.0.0    
+      state: started
+      timeout: 300
+    delegate_to: localhost  
